@@ -2,7 +2,16 @@
 name = "transformer"
 version = "0.1.0"
 edition = "2018"
+authors = ["Breaker <791628659@qq.com>"]
+description = "👽 Not Only a Translator"
+readme = "./README.md"
+repository = "https://github.com/iBreaker/transmormer"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
+[package.metadata.docs.rs]
+all-features = true
+
 [dependencies]
+eframe = { version = "0.14.0", features = ["time"] }
+egui = { version = "0.14.2"}
