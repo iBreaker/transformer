@@ -1,5 +1,10 @@
-mod app;
+use app;
 
 fn main() {
-    println!("Hello, world!");
+    let app = app::app::Transformer::default();
+    let options = eframe::NativeOptions {
+        transparent: true,
+        ..Default::default()
+    };
+    eframe::run_native(Box::new(app), options);
 }

@@ -1322,20 +1322,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "transformer"
-version = "0.1.0"
-dependencies = [
- "app",
- "eframe",
- "egui",
- "transformers",
-]
-
-[[package]]
-name = "transformers"
-version = "0.1.0"
-
-[[package]]
 name = "ttf-parser"
 version = "0.6.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
