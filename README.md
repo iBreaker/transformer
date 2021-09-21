@@ -1,4 +1,10 @@
 # 👽 Not Only a Translator
+
+![Rust](https://img.shields.io/badge/rust-%23000000.svg?&logo=rust&logoColor=white)
+![GitHub last commit](https://img.shields.io/github/last-commit/iBreaker/transformer)
+![GitHub Repo stars](https://img.shields.io/github/stars/iBreaker/transformer)
+![GitHub Repo Forks](https://img.shields.io/github/forks/iBreaker/transformer)
+
 [English](./README.md)|[中文](./REDAME-zh.md)
 
 This program is not just a translation software, it is not named yet. Supports conversion of input characters to another character, including various types of codecs. Packages different types of converters into plug-ins to easily enable users to use them on demand.
