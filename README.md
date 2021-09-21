@@ -1,4 +1,6 @@
 # 👽 Not Only a Translator
+[English](./README.md)|[中文](./REDAME-zh.md)
+
 This program is more than just a translator, which hasn't been named yet. It supports converting input characters to another character, including various types of codecs. Different types of converters are packaged into plug-ins to make it easy for users to use them on demand.
 
 Under development, no stable version...
