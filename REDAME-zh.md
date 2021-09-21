@@ -39,3 +39,7 @@
 ### ⚡️其他
 * [ ] __变量命名__ :写代码的时候用命名变量总会频繁的使用翻译软件，很麻烦。这个插件支持根据中文含义，语言类型生成对应的英文变量名。
 * [ ] __Latex OCR识别__: 将图形化的OCR转为Latex代码
+
+## ⭐ star 趋势
+
+[![Stargazers over time](https://starchart.cc/iBreaker/transformer.svg)](https://starchart.cc/iBreaker/transformer)

@@ -39,3 +39,8 @@ That's all I can think of for now, there should be more extensive uses
 ### ⚡️ Other
 * [ ] __variable naming__ :Writing code with named variables will always use translation software frequently, which is troublesome. This plugin supports generating the corresponding English variable names based on Chinese meaning, language type.
 * [ ] __Latex OCR Recognition__: convert graphical OCR to Latex code
+
+
+## ⭐ Stargazers over time
+
+[![Stargazers over time](https://starchart.cc/iBreaker/transformer.svg)](https://starchart.cc/iBreaker/transformer)
