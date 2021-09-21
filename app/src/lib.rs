@@ -7,3 +7,6 @@ mod tests {
 }
 
 pub mod app;
+
+#[macro_use]
+extern crate lazy_static;
