@@ -7,7 +7,7 @@
 ![GitHub Repo stars](https://img.shields.io/github/stars/iBreaker/transformer)
 ![GitHub Repo Forks](https://img.shields.io/github/forks/iBreaker/transformer)
 
-[English](./README.md)|[中文](./REDAME-zh.md)
+🌏 [English](./README.md)·[中文](./REDAME-zh.md) 🌏
 
 本程序不仅仅是一个翻译软件，还没起名字。支持将输入字符转换为另一个字符，包括各种类型的编码解码。将不同类型的转换器封装成插件，方便使用户按需使用。
 

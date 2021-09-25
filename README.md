@@ -7,7 +7,7 @@
 ![GitHub Repo stars](https://img.shields.io/github/stars/iBreaker/transformer)
 ![GitHub Repo Forks](https://img.shields.io/github/forks/iBreaker/transformer)
 
-[English](./README.md)|[中文](./REDAME-zh.md)
+🌏 [English](./README.md)·[中文](./REDAME-zh.md) 🌏
 
 This program is not just a translation software, it is not named yet. Supports conversion of input characters to another character, including various types of codecs. Packages different types of converters into plug-ins to easily enable users to use them on demand.
 
