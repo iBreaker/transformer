@@ -64,31 +64,25 @@ impl Transformer {
         ui.add(egui::TextEdit::multiline(text_md5).desired_width(f32::INFINITY));
 
         for event in &ui.input().events {
-            let changed = match event {
+            match event {
                 Event::Key { .. } | Event::Text(..) | Event::Copy => true,
-                _ => false,
+                _ => continue,
             };
 
-            if changed {
-                *text_base64_encode = base64::encode(text.clone());
-                *text_url_encode = urlencoding::encode(text.clone().as_str()).to_string();
-                *text_md5 = format!("{:x}", md5::compute(text.clone()));
+            *text_base64_encode = base64::encode(text.clone());
+            *text_url_encode = urlencoding::encode(text.clone().as_str()).to_string();
+            *text_md5 = format!("{:x}", md5::compute(text.clone()));
 
-                match base64::decode(text.clone()) {
-                    Ok(v) => {
-                        match String::from_utf8(v) {
-                            Ok(str) => *text_base64_decode = str,
-                            Err(e) => *text_base64_decode = e.to_string(),
-                        }
-                    }
-                    Err(e) => *text_base64_decode = e.to_string(),
+            *text_base64_decode = match base64::decode(text.clone()) {
+                Ok(v) => {
+                     String::from_utf8(v)
+                        .unwrap_or_else(|e|e.to_string());
                 }
-
-                match urlencoding::decode(text.clone().as_str()) {
-                    Ok(v) => *text_url_decode = v.to_string(),
-                    Err(e) => *text_url_decode = e.to_string()
-                }
+                Err(e) => *text_base64_decode = e.to_string(),
             }
+
+            *text_url_decode = urlencoding::decode(text.clone().as_str())
+                .unwrap_or_else(|e| Cow::from(e.to_string())).to_string();
         }
     }
 
