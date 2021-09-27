@@ -67,9 +67,7 @@ impl Transformer {
 
         for event in &ui.input().events {
             let changed = match event {
-                Event::Text(text_to_instert) => true,
-                Event::Copy => true,
-                Event::Key { key, pressed, modifiers } => true,
+                Event::Text|Event::Copy|Event::Key => true,
                 _ => false,
             };
 
