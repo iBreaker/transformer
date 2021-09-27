@@ -1,14 +1,12 @@
-use std::{thread, time};
+use std::borrow::Cow;
 use std::collections::BTreeMap;
 
 use base64;
-use eframe::egui::{CtxRef, Rgba, Vec2};
 use eframe::egui::{self, FontDefinitions, FontFamily, TextStyle};
 use eframe::epi::{Frame, Storage};
 use egui::Event;
 use md5;
 use urlencoding;
-use std::borrow::Cow;
 
 lazy_static! {
     static ref FONTS_NAME: String = String::from("JiZiJingDianZhunYuanJianFan");
@@ -27,7 +25,7 @@ pub struct Transformer {
 }
 
 impl epi::App for Transformer {
-    fn update(&mut self, ctx: &egui::CtxRef, frame: &mut Frame<'_>) {
+    fn update(&mut self, ctx: &egui::CtxRef, _frame: &mut Frame<'_>) {
         egui::CentralPanel::default().show(ctx, |ui| {
             self.editor_ui(ui)
         });
@@ -67,7 +65,7 @@ impl Transformer {
 
         for event in &ui.input().events {
             let changed = match event {
-                Event::Key{ .. }|  Event::Text(..) | Event::Copy => true,
+                Event::Key { .. } | Event::Text(..) | Event::Copy => true,
                 _ => false,
             };
 
@@ -79,26 +77,16 @@ impl Transformer {
                 match base64::decode(text.clone()) {
                     Ok(v) => {
                         match String::from_utf8(v) {
-                            Ok(str) => {
-                                *text_base64_decode = str;
-                            }
-                            Err(e) => {
-                                *text_base64_decode = e.to_string();
-                            }
+                            Ok(str) => *text_base64_decode = str,
+                            Err(e) => *text_base64_decode = e.to_string(),
                         }
                     }
-                    Err(e) => {
-                        *text_base64_decode = e.to_string();
-                    }
+                    Err(e) => *text_base64_decode = e.to_string(),
                 }
 
                 match urlencoding::decode(text.clone().as_str()) {
-                    Ok(v) => {
-                        *text_url_decode = v.to_string()
-                    }
-                    Err(e) => {
-                        *text_url_decode = e.to_string();
-                    }
+                    Ok(v) => *text_url_decode = v.to_string(),
+                    Err(e) => *text_url_decode = e.to_string()
                 }
             }
         }
