@@ -1,12 +1,13 @@
 use std::borrow::Cow;
 use std::collections::BTreeMap;
 
-use base64;
 use eframe::egui::{self, FontDefinitions, FontFamily, TextStyle};
 use eframe::epi::{Frame, Storage};
 use egui::Event;
-use md5;
-use urlencoding;
+
+use crate::transformers::{
+    TransformerTrait,
+    Base64Decode, Base64Encode, URLDecode, URLEncode, MD5};
 
 lazy_static! {
     static ref FONTS_NAME: String = String::from("JiZiJingDianZhunYuanJianFan");
@@ -65,24 +66,15 @@ impl Transformer {
 
         for event in &ui.input().events {
             match event {
-                Event::Key { .. } | Event::Text(..) | Event::Copy => true,
+                Event::Key { .. } | Event::Text(..) | Event::Copy => (),
                 _ => continue,
             };
 
-            *text_base64_encode = base64::encode(text.clone());
-            *text_url_encode = urlencoding::encode(text.clone().as_str()).to_string();
-            *text_md5 = format!("{:x}", md5::compute(text.clone()));
-
-            *text_base64_decode = match base64::decode(text.clone()) {
-                Ok(v) => {
-                     String::from_utf8(v)
-                        .unwrap_or_else(|e|e.to_string());
-                }
-                Err(e) => *text_base64_decode = e.to_string(),
-            }
-
-            *text_url_decode = urlencoding::decode(text.clone().as_str())
-                .unwrap_or_else(|e| Cow::from(e.to_string())).to_string();
+            *text_base64_encode = Base64Encode::transform(text.clone());
+            *text_url_encode = URLEncode::transform(text.clone());
+            *text_md5 = MD5::transform(text.clone());
+            *text_url_decode = URLDecode::transform(text.clone());
+            *text_base64_decode = Base64Decode::transform(text.clone());
         }
     }
 

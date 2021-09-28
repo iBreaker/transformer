@@ -15,4 +15,3 @@ all-features = true
 [dependencies]
 eframe = { version = "0.14.0", features = ["time"] }
 app = {path="./app"}
-transformers = {path="./transformers"}
