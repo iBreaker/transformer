@@ -4,10 +4,9 @@ use std::collections::BTreeMap;
 use eframe::egui::{self, FontDefinitions, FontFamily, TextStyle};
 use eframe::epi::{Frame, Storage};
 use egui::Event;
+use std::collections::HashMap;
 
-use crate::transformers::{
-    TransformerTrait,
-    Base64Decode, Base64Encode, URLDecode, URLEncode, MD5};
+use crate::transformers::{TS, get_transformers};
 
 lazy_static! {
     static ref FONTS_NAME: String = String::from("JiZiJingDianZhunYuanJianFan");
@@ -16,19 +15,16 @@ lazy_static! {
 const NAME: &str = "Transformer";
 
 #[derive(Default)]
-pub struct Transformer {
+pub struct Transformer{
     text: String,
-    text_base64_encode: String,
-    text_base64_decode: String,
-    text_url_encode: String,
-    text_url_decode: String,
-    text_md5: String,
+    data: HashMap<String, String>,
+    ts: TS,
 }
 
-impl epi::App for Transformer {
+impl epi::App for Transformer{
     fn update(&mut self, ctx: &egui::CtxRef, _frame: &mut Frame<'_>) {
         egui::CentralPanel::default().show(ctx, |ui| {
-            self.editor_ui(ui)
+            self.ui_update(ui)
         });
     }
 
@@ -38,7 +34,13 @@ impl epi::App for Transformer {
         _frame: &mut Frame<'_>,
         _storage: Option<&dyn Storage>,
     ) {
+        self.ts = get_transformers();
         self.set_fonts(_ctx);
+
+        for t   in self.ts.iter(){
+            // let mut new_text =
+            self.data.insert(t.name(), String::new());
+        }
     }
 
     fn name(&self) -> &str {
@@ -47,22 +49,18 @@ impl epi::App for Transformer {
 }
 
 impl Transformer {
-    fn editor_ui(&mut self, ui: &mut egui::Ui) {
+    fn ui_update(&mut self, ui: &mut egui::Ui) {
         let Self {
             text,
-            text_base64_encode,
-            text_base64_decode,
-            text_url_encode,
-            text_url_decode,
-            text_md5
+            data,
+            ts
         } = self;
 
         ui.add(egui::TextEdit::multiline(text).desired_width(f32::INFINITY));
-        ui.add(egui::TextEdit::multiline(text_base64_encode).desired_width(f32::INFINITY));
-        ui.add(egui::TextEdit::multiline(text_base64_decode).desired_width(f32::INFINITY));
-        ui.add(egui::TextEdit::multiline(text_url_encode).desired_width(f32::INFINITY));
-        ui.add(egui::TextEdit::multiline(text_url_decode).desired_width(f32::INFINITY));
-        ui.add(egui::TextEdit::multiline(text_md5).desired_width(f32::INFINITY));
+        for t   in ts.iter(){
+            let new_text = data.get_mut(&t.name()).unwrap();
+            ui.add(egui::TextEdit::multiline(new_text).desired_width(f32::INFINITY));
+        }
 
         for event in &ui.input().events {
             match event {
@@ -70,11 +68,10 @@ impl Transformer {
                 _ => continue,
             };
 
-            *text_base64_encode = Base64Encode::transform(text.clone());
-            *text_url_encode = URLEncode::transform(text.clone());
-            *text_md5 = MD5::transform(text.clone());
-            *text_url_decode = URLDecode::transform(text.clone());
-            *text_base64_decode = Base64Decode::transform(text.clone());
+            for t in ts.iter(){
+                let new_text = data.get_mut(&t.name()).unwrap();
+                *new_text = t.transform(text.to_string())
+            };
         }
     }
 
