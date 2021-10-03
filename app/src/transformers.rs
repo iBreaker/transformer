@@ -9,15 +9,26 @@ pub mod Trait {
     }
 }
 
-pub struct Base64Decode {}
+pub fn get_transformers() -> TS {
+    vec![
+        // &Base64Decode {},
+        // &Base64Encode {},
+        // &URLDecode {},
+        // &URLEncode {},
+        // &MD5 {},
+        &baidu::Baidu {
+            app_id: "",
+            app_key: "",
+        },
+    ]
+}
+
 
 pub type TS = Vec<&'static dyn Trait::TransformerTrait>;
 
-pub fn get_transformers() -> TS {
-    vec![&Base64Decode {}, &Base64Encode {}, &URLDecode {}, &URLEncode {}, &MD5 {}, baidu::new()]
-}
-
 // base64 解码
+pub struct Base64Decode {}
+
 impl Trait::TransformerTrait for Base64Decode {
     fn transform(&self, input: String) -> String {
         match base64::decode(input) {
