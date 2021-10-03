@@ -1,14 +1,14 @@
+//
+//  @auther: Breaker
+//  @create: 2021-10-03 14:21
+//
+
+use super::Trait::TransformerTrait;
 use base;
 use rand::prelude::*;
 use reqwest::blocking::Client;
 use serde::{Deserialize, Serialize};
 use std::collections::HashMap;
-
-//
-//  @auther: Breaker
-//  @create: 2021-10-03 14:21
-//
-use super::Trait::TransformerTrait;
 
 const BAIDU_APP_ID: &str = "BAIDU_APP_ID";
 const BAIDU_API_APP_KEY: &str = "BAIDU_APP_KEY";
@@ -41,13 +41,13 @@ struct RequsetBody {
 }
 
 impl RequsetBody {
-    fn build_sigin(&self, appkey: String) -> String {
+    fn build_sigin(&mut self, appkey: String) {
         let mut str: String = String::new();
         str.push_str(&self.appid);
         str.push_str(&self.q);
         str.push_str(&self.salt.to_string());
         str.push_str(&appkey);
-        format!("{:x}", md5::compute(&str))
+        self.sign = format!("{:x}", md5::compute(&str))
     }
 }
 
@@ -78,10 +78,11 @@ impl Baidu {
             sign: "".to_string(),
         };
 
-        body.sign = body.build_sigin(appkey);
+        body.build_sigin(appkey);
 
         let client = Client::new();
 
+        // TODO: async
         let resp = client.post(BAIDU_API_URL).form(&body).send()?;
         let data = match resp.json::<ResponseBody>() {
             Ok(body) => {
