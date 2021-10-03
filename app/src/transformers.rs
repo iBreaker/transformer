@@ -1,5 +1,5 @@
+use base::env;
 use std::borrow::Cow;
-
 mod baidu;
 
 pub mod Trait {
@@ -16,13 +16,9 @@ pub fn get_transformers() -> TS {
         // &URLDecode {},
         // &URLEncode {},
         // &MD5 {},
-        &baidu::Baidu {
-            app_id: "",
-            app_key: "",
-        },
+        &baidu::Baidu {},
     ]
 }
-
 
 pub type TS = Vec<&'static dyn Trait::TransformerTrait>;
 
@@ -32,10 +28,7 @@ pub struct Base64Decode {}
 impl Trait::TransformerTrait for Base64Decode {
     fn transform(&self, input: String) -> String {
         match base64::decode(input) {
-            Ok(v) => {
-                String::from_utf8(v)
-                    .unwrap_or_else(|e| e.to_string())
-            }
+            Ok(v) => String::from_utf8(v).unwrap_or_else(|e| e.to_string()),
             Err(e) => e.to_string(),
         }
     }
@@ -86,7 +79,8 @@ pub struct URLDecode {}
 impl Trait::TransformerTrait for URLDecode {
     fn transform(&self, input: String) -> String {
         urlencoding::decode(input.as_str())
-            .unwrap_or_else(|e| Cow::from(e.to_string())).to_string()
+            .unwrap_or_else(|e| Cow::from(e.to_string()))
+            .to_string()
     }
     fn name(&self) -> String {
         "URLDecode".to_string()
