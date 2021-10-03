@@ -1,3 +1,5 @@
 /target
 .idea
 tmp/
+node_modules
+dist

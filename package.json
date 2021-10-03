@@ -1,0 +1,30 @@
+{
+  "name": "transformer",
+  "scripts": {
+    "dev": "tauri dev",
+    "tauri": "tauri",
+    "lint": "next lint next",
+    "next": "next next",
+    "clippy": "cargo clippy --manifest-path ./tauri/Cargo.toml",
+    "next-build": "next build next",
+    "next-export": "next export next -o dist"
+  },
+  "dependencies": {
+    "@emotion/react": "^11.11.1",
+    "@emotion/styled": "^11.11.0",
+    "@mui/material": "^5.13.7",
+    "@tauri-apps/api": "^1.4.0",
+    "next": "^13.4.8",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
+  },
+  "devDependencies": {
+    "@tauri-apps/cli": "^1.4.0",
+    "@types/node": "^20.3.2",
+    "@types/react": "^18.2.14",
+    "@types/react-dom": "^18.2.6",
+    "eslint": "8.44.0",
+    "eslint-config-next": "13.4.8",
+    "typescript": "^5.1.6"
+  }
+}
