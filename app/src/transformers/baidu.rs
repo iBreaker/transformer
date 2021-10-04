@@ -3,12 +3,14 @@
 //  @create: 2021-10-03 14:21
 //
 
-use super::Trait::TransformerTrait;
+use std::collections::HashMap;
+
 use base;
 use rand::prelude::*;
-use reqwest::blocking::Client;
+use reqwest::Client;
 use serde::{Deserialize, Serialize};
-use std::collections::HashMap;
+
+use super::Trait::TransformerTrait;
 
 const BAIDU_APP_ID: &str = "BAIDU_APP_ID";
 const BAIDU_API_APP_KEY: &str = "BAIDU_APP_KEY";
@@ -47,7 +49,7 @@ impl RequsetBody {
         str.push_str(&self.q);
         str.push_str(&self.salt.to_string());
         str.push_str(&appkey);
-        self.sign = format!("{:x}", md5::compute(&str))
+        self.sign = format!("{:x}", md5::compute(&str));
     }
 }
 
@@ -65,16 +67,17 @@ struct ResponseBody {
 }
 
 impl Baidu {
-    fn resp(&self, src: String) -> Result<String, reqwest::Error> {
+    #[tokio::main]
+    async fn resp(&self, src: String) -> Result<String, reqwest::Error> {
         let appid = base::env::get_env(BAIDU_APP_ID.to_string(), "".to_string());
         let appkey = base::env::get_env(BAIDU_API_APP_KEY.to_string(), "".to_string());
-        let salt: u32 = rand::random();
+        let salt = rand::random::<u32>();
         let mut body = RequsetBody {
-            appid: appid,
+            appid,
             q: src,
             from: "en".to_string(),
             to: "zh".to_string(),
-            salt: salt,
+            salt,
             sign: "".to_string(),
         };
 
@@ -82,18 +85,12 @@ impl Baidu {
 
         let client = Client::new();
 
-        // TODO: async
-        let resp = client.post(BAIDU_API_URL).form(&body).send()?;
-        let data = match resp.json::<ResponseBody>() {
-            Ok(body) => {
-                if body.trans_result.len() == 0 {
-                    "".to_string()
-                } else {
-                    body.trans_result[0].dst.clone()
-                }
-            }
-            Err(e) => e.to_string(),
-        };
-        Ok(data.clone())
+        let resp = client.post(BAIDU_API_URL).form(&body).send().await?.json::<ResponseBody>().await?;
+
+        if resp.trans_result.len() == 0 {
+            return Ok( "".to_string())
+        } else {
+            return Ok(resp.trans_result[0].dst.clone())
+        }
     }
 }
