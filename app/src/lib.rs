@@ -7,10 +7,10 @@ mod tests {
 }
 
 pub mod app;
-pub mod transformers;
+// pub mod transformers;
 
 #[macro_use]
 extern crate lazy_static;
 
-#[macro_use]
-extern crate base;
+// #[macro_use]
+// extern crate base;
