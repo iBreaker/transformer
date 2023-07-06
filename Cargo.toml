@@ -13,6 +13,5 @@ repository = "https://github.com/iBreaker/transmormer"
 all-features = true
 
 [dependencies]
-eframe = { version = "0.14.0", features = ["time"] }
-app = {path="./app"}
-base = {path="./base"}
+eframe = { version = "0.22.0"}
+env_logger = "0.10"
