@@ -6,7 +6,7 @@
     "distDir": "../.next"
   },
   "package": {
-    "productName": "temp",
+    "productName": "huzhou",
     "version": "0.1.0"
   },
   "tauri": {
@@ -34,7 +34,7 @@
         "icons/icon.icns",
         "icons/icon.ico"
       ],
-      "identifier": "com.tauri.dev",
+      "identifier": "fun.brekaer.huzhou",
       "longDescription": "",
       "macOS": {
         "entitlements": null,
@@ -63,7 +63,7 @@
         "fullscreen": false,
         "height": 400,
         "resizable": true,
-        "title": "translator",
+        "title": "",
         "width": 500
       }
     ]

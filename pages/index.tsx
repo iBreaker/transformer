@@ -91,7 +91,7 @@ export default function Home() {
       <div className={styles.container}>
         <div className={styles.translatorBox}>
           <div className={styles.header}>
-            <h1>Translater</h1>
+            <h1>👽 Huzhou</h1>
             <button onClick={() => setIsConfigOpen(true)}>配置</button>
           </div>
           <div className={styles.languageSelector}>
